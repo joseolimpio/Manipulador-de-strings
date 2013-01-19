@@ -4,7 +4,7 @@
 
 typedef enum { FALSE, TRUE } bool;
 
-typedef struct { char caractere;
+typedef struct tNo { char caractere;
                  struct tNo * prox;
                } tNo;
 
