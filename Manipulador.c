@@ -47,7 +47,7 @@ void imprimeLista (Fila S) {
 
 int pos =0;
 
-                 printf("========================\n");
+	printf("========================\n");
 
    if ( S.inicio == NULL)
       printf("Lista Vazia\n");
@@ -96,7 +96,7 @@ bool inserirItem(Fila* S, char caractere)
 
                     if (S->fim == NULL) S->fim = novoNo;
 
-                    novoNo->prox = S->inicio;
+                    novoNo->prox = S->fim;
                     S->inicio = novoNo;
 
                     if(S->inicio == NULL)
@@ -105,18 +105,19 @@ bool inserirItem(Fila* S, char caractere)
                         }
 
                 }
-                else
-                {
+
+
+        }
+        else
+        {
                     S->fim->prox = novoNo;
                     S->fim = novoNo;
-                }
-
         }
     return r;
 }
 
 // ***********************************************
-// ******                                   ******
+// ******        Gambiarra                  ******
 // ***********************************************
 
 
@@ -148,8 +149,9 @@ int menu()
     printf("10. Sair.\n");
     printf("\n\n");
     printf("|-----------------------------------------------|\n");
-    printf("|-----------------------------------------------|\n");
+    printf("Opcao:");
     scanf("%d", &opcao);
+    printf("|-----------------------------------------------|\n");
     return opcao;
 }
 
@@ -159,8 +161,8 @@ int menu()
 
 int main()
 {
-    int opcao,i,j;
-    char frase[50];
+    int opcao,i,j,tam,contpalavra;
+    char frase[200];
     char caracter;
     Fila SVazia,S1,S;
     opcao = 0;
@@ -192,7 +194,7 @@ int main()
         }
 
         if(opcao == 2)
-        {   i,j = 0;
+        {   i,j,contpalavra = 0;
             system("cls");
             OK = initString(&S1);
             OK1 = initString(&S);
@@ -203,8 +205,12 @@ int main()
                     printf("Lista S1 e S criadas com sucesso. \n");
                 }
                 printf("\n\n");
-            printf("insira a String[S1]\n");
+            printf("insira a String[S1]:\n");
             scanf("%s",&frase);
+            gets(frase);
+            tam = strlen(frase);
+
+            printf("tamanho da string.[%i]\n",tam);
 
             if((OK == TRUE)&&(OK1 == TRUE))
                 {
@@ -212,15 +218,33 @@ int main()
                     OK1 = testavazio(S);
                         if((OK == TRUE)&&(OK1 == TRUE))
                             {
-
-                                  //  while(frase[i]!= '.')
-                                    for(i=0; i<= 200 ;i++)
+                                //  while(frase[i]!= '.')
+                                    for(i=0; i<=200 ;i++)
                                         {
                                             caracter = frase[i];
+
+
                                             if(caracter!='.')
                                                 {
-                                                    inserirItem(&S1,caracter);
-                                                    printf("inserção[%i] realizada com sucesso.\n",i);
+                                                    if(caracter == ' ')
+                                                    {
+                                                      contpalavra++;
+                                                    }else
+                                                    {
+
+                                                    OK = inserirItem(&S1,caracter);
+                                                    if(OK == TRUE)
+                                                       {
+                                                       printf("inserção[%i] realizada com sucesso.\n",i);
+                                                       }
+                                                       else
+                                                        { printf("inserção[%i] falhou.\n",i);}
+
+
+                                                    }
+
+
+
                                                 }else
                                                 {
                                                 i= 200;
@@ -234,106 +258,9 @@ int main()
                                     printf("Ocorreu um erro na criação da lista S1.\n");
                                     }
                     printf("\n\n");
+                    printf("palavras[%i]",contpalavra);
+                    printf("\n\n");
                     imprimeLista(S1);
         }
-
-}
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-
-typedef enum { FALSE, TRUE } bool;
-
-typedef struct tNo { char caractere;
-                 struct tNo * prox;
-               } tNo;
-
-typedef struct {
-                tNo* inicio;
-                tNo* fim;
-               } Fila;
-
-
-// ***********************************************
-// ******************** Initlista ****************
-// ***********************************************
-bool initString ( Fila* S)
-{
-    bool r = TRUE;
-    S->inicio=NULL;
-    S->fim = NULL;
-    return r;
-}
-
-// ***********************************************
-// ******            empty check            ******
-// ***********************************************
-bool testavazio(Fila S)
-{
-    return((S.inicio == NULL)&&(S.fim == NULL));
-}
-// ***********************************************
-// ******                                   ******
-// ***********************************************
-bool inserirItem(Fila* S, char caractere)
-{
-    bool OK;
-    bool r = TRUE;
-    tNo* novoNo;
-
-    novoNo = (tNo*) malloc(sizeof(tNo));
-        if(novoNo == NULL)
-            {
-                r = FALSE;
-                return r;
-            }
-     novoNo->caractere = caractere;
-     novoNo->prox = NULL;
-
-    OK = testavazio(*S);
-    if (!OK)
-        {
-            S->fim->prox = novoNo;
-            S->fim = novoNo;
-        }
-    return r;
-}
-// ***********************************************
-// ******                                   ******
-// ***********************************************
-
-
-
-// ***********************************************
-// ******                                   ******
-// ***********************************************
-
-
-
-
-// ***********************************************
-// ******                                   ******
-// ***********************************************
-
-
-// ***********************************************
-// ******                                   ******
-// ***********************************************
-
-
-// ***********************************************
-// ******                                   ******
-// ***********************************************
-
-
-// ***********************************************
-// ***********************************************
-// ***********************************************
-
-int main()
-{
-
-
-
 
 }
