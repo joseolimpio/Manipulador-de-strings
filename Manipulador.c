@@ -11,13 +11,13 @@ typedef struct tNo {    char caractere;
 typedef struct {
                 tNo* inicio;
                 tNo* fim;
-               } Fila;
+               } Lista;
 
 
 // ***********************************************
 // ******************** Initlista ****************
 // ***********************************************
-bool initString ( Fila* S)
+bool initString ( Lista* S)
 {
     bool r = TRUE;
     S->inicio=NULL;
@@ -28,7 +28,7 @@ bool initString ( Fila* S)
 // ***********************************************
 // ******            empty check            ******
 // ***********************************************
-bool testavazio(Fila S)
+bool testavazio(Lista S)
 {
     return((S.inicio == NULL)&&(S.fim == NULL));
 }
@@ -43,7 +43,7 @@ bool testavazio(Fila S)
 // ***********************************************
 // ******             imprimir              ******
 // ***********************************************
-void imprimeLista (Fila S) {
+void imprimeLista (Lista S) {
 
 int pos =0;
 
@@ -70,7 +70,7 @@ int pos =0;
 // ***********************************************
 
 
-bool inserirItem(Fila* S, char caractere)
+bool inserirItem(Lista* S, char caractere)
 {
     bool OK;
     bool r = TRUE;
@@ -164,7 +164,7 @@ int main()
     int opcao,i,j,tam,contpalavra;
     char frase[200];
     char caracter;
-    Fila SVazia,S1,S;
+    Lista SVazia,S1,S;
     opcao = 0;
     bool OK,OK1;
     opcao = menu();
@@ -206,11 +206,7 @@ int main()
                 }
                 printf("\n\n");
             printf("insira a String[S1]:\n");
-            scanf("%s",&frase);
-            gets(frase);
-            tam = strlen(frase);
-
-            printf("tamanho da string.[%i]\n",tam);
+            scanf("%c",&frase);
 
             if((OK == TRUE)&&(OK1 == TRUE))
                 {
