@@ -162,7 +162,7 @@ int menu()
 int main()
 {
     int opcao,i,j,tam,contpalavra;
-    char frase[200];
+    char c;
     char caracter;
     Lista SVazia,S1,S;
     opcao = 0;
@@ -195,6 +195,7 @@ int main()
 
         if(opcao == 2)
         {   i,j,contpalavra = 0;
+            c = '\0';
             system("cls");
             OK = initString(&S1);
             OK1 = initString(&S);
@@ -206,7 +207,10 @@ int main()
                 }
                 printf("\n\n");
             printf("insira a String[S1]:\n");
-            scanf("%c",&frase);
+            scanf("%c",&c);
+
+
+
 
             if((OK == TRUE)&&(OK1 == TRUE))
                 {
@@ -217,33 +221,27 @@ int main()
                                 //  while(frase[i]!= '.')
                                     for(i=0; i<=200 ;i++)
                                         {
-                                            caracter = frase[i];
-
-
-                                            if(caracter!='.')
+                                                   if(caracter!='.')
                                                 {
-                                                    if(caracter == ' ')
-                                                    {
-                                                      contpalavra++;
-                                                    }else
-                                                    {
+                                                    scanf("%c",&c);
+                                                    caracter = c;
+                                                            if(caracter == ' ')
+                                                                    {
+                                                                        contpalavra++;
+                                                                    }
 
                                                     OK = inserirItem(&S1,caracter);
-                                                    if(OK == TRUE)
-                                                       {
-                                                       printf("inserção[%i] realizada com sucesso.\n",i);
-                                                       }
-                                                       else
-                                                        { printf("inserção[%i] falhou.\n",i);}
-
-
-                                                    }
-
-
-
-                                                }else
+                                                            if(OK == TRUE)
+                                                            {
+                                                            printf("inserção[%i] realizada com sucesso.\n",i);
+                                                            }else
+                                                                {
+                                                                    printf("inserção[%i] falhou.\n",i);
+                                                                }
+                                                    }else
                                                 {
-                                                i= 200;
+                                                    c
+                                                break;
                                                 }
 
                                         }
