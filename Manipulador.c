@@ -6,11 +6,13 @@ typedef enum { FALSE, TRUE } bool;
 
 typedef struct tNo {    char caractere;
                         struct tNo * prox;
+
                     } tNo;
 
 typedef struct {
                 tNo* inicio;
                 tNo* fim;
+                int tam;
                } Lista;
 
 
@@ -22,6 +24,7 @@ bool initString ( Lista* S)
     bool r = TRUE;
     S->inicio=NULL;
     S->fim = NULL;
+    S->tam = 0;
     return r;
 }
 
@@ -66,7 +69,7 @@ int pos =0;
 	printf("========================\n");
 }
 // ***********************************************
-// ******                                   ******
+// ******              inserir              ******
 // ***********************************************
 
 
@@ -103,7 +106,7 @@ bool inserirItem(Lista* S, char caractere)
                         {
                           printf("Ocorreu um erro na inserção do primeiro termo.");
                         }
-
+    
                 }
 
 
@@ -113,17 +116,141 @@ bool inserirItem(Lista* S, char caractere)
                     S->fim->prox = novoNo;
                     S->fim = novoNo;
         }
+    S->tam++;    
     return r;
 }
 
 // ***********************************************
-// ******        Gambiarra                  ******
+// ******        copia strings              ******
 // ***********************************************
+bool copiaString(Lista*Original, Lista* Copia)
+{
+    bool OK,r = TRUE;
+    int pos =0;
+    char elemento;
+    tNo* posOriginal = Original->inicio;
+
+   if ( Original->inicio == NULL)
+    {
+        printf("Lista Vazia\n");
+        r = FALSE;
+        return r;
+    }
+
+   else {
+
+
+        do {
+
+          //printf("posicao[%i] - dado[%c] -> ponteiro[%p]\n", pos, posOriginal->caractere , posOriginal);
+          elemento = posOriginal->caractere;
+          OK = inserirItem(Copia,elemento);
+                if(OK == TRUE)
+                    {
+                    posOriginal = posOriginal->prox;
+                    }
+                 else
+                    {
+                        printf("erro na copia da lista.\n");
+                    }
+
+
+          } while (posOriginal != NULL);
+      }
+   return r;
+
+}
+
+// ***********************************************
+// ******           Verificar 2 strings     ******
+// ***********************************************
+bool verificarStrings(Lista* S1, Lista * S2)
+{
+    bool OK,r = TRUE;
+    int pos,flag =0;
+    char elemento,elemento1;
+    tNo* posPrimaria = S1->inicio;
+    tNo* posSecundaria = S2->inicio;
+
+   if (( S1->inicio == NULL)||(S2->inicio == NULL))
+    {
+        printf("Lista Vazia\n");
+        r = FALSE;
+        return r;
+    }
+
+   else {
+
+
+        do {
+
+
+          elemento = posPrimaria->caractere;
+          elemento1 = posSecundaria->caractere;
+          if(elemento == elemento1)
+                    {
+                        //printf("o elemento[%c] está presente nas duas listas.\n",elemento);
+                    }
+                 else
+                    {
+                        //printf("o elemento[%c] não está presente nas duas listas.\n",elemento);
+                        flag++;
+                    }
+          posPrimaria =  posPrimaria->prox;
+          posSecundaria= posSecundaria->prox;
+
+          } while (posPrimaria != NULL);
+      }
+   if(flag > 0)
+   {
+       r = FALSE;
+       return r;
+   }
+   return r;
+}
 
 
 // ***********************************************
-// ******                                   ******
+// ******              Menu                 ******
 // ***********************************************
+void enchelista(Lista S,char c)
+{
+char caracter='\0';
+int i,contpalavra = 0;
+bool OK;
+         for(i=0; i<=200 ;i++)
+                {
+                 if(caracter!='.')
+                      {
+                        scanf("%c",&c);
+                        caracter = c;
+                        if(caracter == ' ')
+                            {
+                                contpalavra++;
+                            }
+
+                        OK = inserirItem(&S,caracter);
+                            if(OK == TRUE)
+                                {
+                                    printf("inserção[%i] realizada com sucesso.\n",i);
+                                }else
+                                {
+                                    printf("inserção[%i] falhou.\n",i);
+                                }
+                        }else
+                                {
+                                    contpalavra++;
+                                    break;
+                                }
+
+                    }
+
+
+
+}
+
+
+
 
 
 // ***********************************************
@@ -161,10 +288,10 @@ int menu()
 
 int main()
 {
-    int opcao,i,j,tam,contpalavra;
+    int opcao,i,j,tam,contpalavra,volta;
     char c;
     char caracter;
-    Lista SVazia,S1,S;
+    Lista SVazia,S1,S,S2,S3;
     opcao = 0;
     bool OK,OK1;
     opcao = menu();
@@ -194,7 +321,7 @@ int main()
         }
 
         if(opcao == 2)
-        {   i,j,contpalavra = 0;
+        {   i,contpalavra = 0;
             c = '\0';
             system("cls");
             OK = initString(&S1);
@@ -208,10 +335,6 @@ int main()
                 printf("\n\n");
             printf("insira a String[S1]:\n");
             scanf("%c",&c);
-
-
-
-
             if((OK == TRUE)&&(OK1 == TRUE))
                 {
                     OK = testavazio(S1);
@@ -240,7 +363,7 @@ int main()
                                                                 }
                                                     }else
                                                 {
-                                                    c
+                                                contpalavra++;
                                                 break;
                                                 }
 
@@ -252,9 +375,230 @@ int main()
                                     printf("Ocorreu um erro na criação da lista S1.\n");
                                     }
                     printf("\n\n");
-                    printf("palavras[%i]",contpalavra);
+                    //printf("palavras[%i]",contpalavra);
+                    printf("\n\n");
+                    OK = copiaString(&S1,&S);
+                    if(OK == TRUE)
+                    {
+                    printf("\n\n");
+                    printf("String Original [S1]");
                     printf("\n\n");
                     imprimeLista(S1);
-        }
+                    printf("\n\n");
+                    printf("String Copia [S]");
+                    printf("\n\n");
+                    imprimeLista(S);
+                    }else
+                    {
+                    printf("erro na criacao da copia da lista.\n");
+                    }
+         OK = verificarStrings(&S1,&S);
+         if (OK == TRUE)
+         {
+          printf("\n\n");
+          printf("As Strings sao identicas.\n");
+          printf("\n\n");
+         }else
+         {
+          printf("\n\n");
+          printf("As Strings não são identicas.\n");
+          printf("\n\n");
+         }
 
+        }
+        if(opcao == 3)
+        {
+            i,contpalavra = 0;
+            c = '\0';
+            system("cls");
+            OK = initString(&S1);
+            OK1 = initString(&S2);
+            printf("\n\n");
+            printf("Criar uma String[S1] e copiar para outra String[S]...\n\n");
+            if((OK == TRUE)&&(OK1 == TRUE))
+                {
+                    printf("Lista S1 e S criadas com sucesso. \n");
+                }
+            printf("\n\n");
+            printf("insira a String[S1]:\n");
+            scanf("%c",&c);
+            if(OK == TRUE)
+                {
+                    OK = testavazio(S1);
+                      if(OK == TRUE)
+                            {
+                                      for(i=0; i<=200 ;i++)
+                                        {
+                                                   if(caracter!='.')
+                                                {
+                                                    scanf("%c",&c);
+                                                    caracter = c;
+                                                            if(caracter == ' ')
+                                                                    {
+                                                                        contpalavra++;
+                                                                    }
+
+                                                    OK = inserirItem(&S1,caracter);
+                                                            if(OK == TRUE)
+                                                            {
+                                                            printf("inserção[%i] realizada com sucesso.\n",i);
+                                                            }else
+                                                                {
+                                                                    printf("inserção[%i] falhou.\n",i);
+                                                                }
+                                                    }else
+                                                {
+                                                contpalavra++;
+                                                break;
+                                                }
+
+                                            }
+                                }else
+                                    {
+                                    system("cls");
+                                    printf("Ocorreu um erro na criação da lista S2.\n");
+                                    }
+            printf("\n\n");
+            //printf("palavras[%i]",contpalavra);
+            printf("\n\n");
+            contpalavra = 0;
+            caracter = '\0';
+            printf("insira a String[S2]:\n");
+            scanf("%c",&c);
+            if(OK == TRUE)
+                {
+                    OK = testavazio(S2);
+                      if(OK == TRUE)
+                            {
+                                      for(i=0; i<=200 ;i++)
+                                        {
+                                                   if(caracter!='.')
+                                                {
+                                                    scanf("%c",&c);
+                                                    caracter = c;
+                                                            if(caracter == ' ')
+                                                                    {
+                                                                        contpalavra++;
+                                                                    }
+
+                                                    OK = inserirItem(&S2,caracter);
+                                                            if(OK == TRUE)
+                                                            {
+                                                            printf("inserção[%i] realizada com sucesso.\n",i);
+                                                            }else
+                                                                {
+                                                                    printf("inserção[%i] falhou.\n",i);
+                                                                }
+                                                }else
+                                                {
+                                                contpalavra++;
+                                                break;
+                                                }
+
+                                            }
+                                }else
+                                    {
+                                    system("cls");
+                                    printf("Ocorreu um erro na criação da lista S1.\n");
+                                    }
+
+
+                    printf("\n\n");
+                    //printf("palavras[%i]",contpalavra);
+                    printf("\n\n");
+                    printf("\n\n");
+                    }else
+                    {
+                    printf("erro na criacao da copia da lista.\n");
+                    }
+         OK = verificarStrings(&S1,&S2);
+         if (OK == TRUE)
+         {
+          printf("\n\n");
+          printf("As Strings sao identicas.\n");
+          printf("\n\n");
+         }else
+         {
+          printf("\n\n");
+          printf("As Strings nao sao identicas.\n");
+          printf("\n\n");
+         }
+            }
+
+         /* voltar ao menu.
+          printf("\n\n");
+          printf("Deseja voltar ao menu? 1- Sim / 2- Sair do programa.\n");
+          printf("\n\n");
+          scanf("%i",volta);
+          if(volta == 1)
+          {
+              system("cls");
+
+          }
+
+            */
+
+        }
+     if(opcao == 4)
+        {
+            int i,contpalavra = 0;
+            c = '\0';
+            caracter='\0';
+            system("cls");
+            OK = initString(&S1);
+            OK1 = initString(&S);
+            printf("\n\n");
+            printf("Criar uma String[S3] e contar quantas palavras...\n\n");
+            if(OK == TRUE)
+                {
+                    printf("Lista S3 criadas com sucesso. \n");
+                }
+                printf("\n\n");
+            printf("insira a String:\n");
+            scanf("%c",&c);
+            if(OK == TRUE)
+                {
+                    OK = testavazio(S3);
+
+                        if(OK == TRUE)
+                            {
+                                //  while(frase[i]!= '.')
+                                    for(i=0; i<=200 ;i++)
+                                        {
+                                                   if(caracter!='.')
+                                                {
+                                                    scanf("%c",&c);
+                                                    caracter = c;
+                                                            if(caracter == ' ')
+                                                                    {
+                                                                        contpalavra++;
+                                                                    }
+
+                                                    OK = inserirItem(&S3,caracter);
+                                                            if(OK == TRUE)
+                                                            {
+                                                            //printf("inserção[%i] realizada com sucesso.\n",i);
+                                                            }else
+                                                                {
+                                                                    printf("inserção[%i] falhou.\n",i);
+                                                                }
+                                                    }else
+                                                {
+                                                contpalavra++;
+                                                break;
+                                                }
+
+                                        }
+                            }
+                                }else
+                                    {
+                                    system("cls");
+                                    printf("Ocorreu um erro na criação da lista S3.\n");
+                                    }
+                    printf("\n\n");
+                    printf("palavras[%i]",contpalavra);
+                    printf("\n\n");
+
+        }
 }
+
