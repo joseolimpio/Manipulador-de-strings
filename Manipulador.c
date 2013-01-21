@@ -6,7 +6,6 @@ typedef enum { FALSE, TRUE } bool;
 
 typedef struct tNo {    char caractere;
                         struct tNo * prox;
-
                     } tNo;
 
 typedef struct {
@@ -106,7 +105,7 @@ bool inserirItem(Lista* S, char caractere)
                         {
                           printf("Ocorreu um erro na inserção do primeiro termo.");
                         }
-    
+
                 }
 
 
@@ -116,7 +115,7 @@ bool inserirItem(Lista* S, char caractere)
                     S->fim->prox = novoNo;
                     S->fim = novoNo;
         }
-    S->tam++;    
+    S->tam++;
     return r;
 }
 
@@ -211,44 +210,50 @@ bool verificarStrings(Lista* S1, Lista * S2)
 
 
 // ***********************************************
-// ******              Menu                 ******
+// ******              Inverter as letras   ******
 // ***********************************************
-void enchelista(Lista S,char c)
+void inverteFrase(Lista S)
 {
-char caracter='\0';
-int i,contpalavra = 0;
-bool OK;
-         for(i=0; i<=200 ;i++)
-                {
-                 if(caracter!='.')
-                      {
-                        scanf("%c",&c);
-                        caracter = c;
-                        if(caracter == ' ')
-                            {
-                                contpalavra++;
-                            }
+char frase[40];
+char c;
+int pos,i = 0;
 
-                        OK = inserirItem(&S,caracter);
-                            if(OK == TRUE)
-                                {
-                                    printf("inserção[%i] realizada com sucesso.\n",i);
-                                }else
-                                {
-                                    printf("inserção[%i] falhou.\n",i);
-                                }
-                        }else
-                                {
-                                    contpalavra++;
-                                    break;
-                                }
+	printf("========================\n");
 
-                    }
+   if ( S.inicio == NULL)
+      printf("Lista Vazia\n");
+   else {
+
+      printf("Inicio = %p\n", S.inicio);
+      printf("Final = %p\n", S.fim);
+      tNo* posAtual = S.inicio;
 
 
+        do
+        {
+         // printf("posicao[%i] - dado[%c] -> ponteiro[%p]\n", pos ,posAtual->caractere , posAtual);
 
+          frase[i] = posAtual->caractere;
+          posAtual = posAtual->prox;
+          printf("dado[%c]\n",frase[i]);
+          i++;
+          pos++;
+        }while(posAtual != NULL);
+
+        pos=S.tam;
+        printf("tamanho lista[%i]\n" , pos);
+        printf("a frase inversa eh :");
+        do
+        {
+          c = frase[pos];
+          printf("%c",c);
+           pos--;
+        }while((pos >= 0 )||( c >= 32)&&(c <= 125));
+
+      }
+    printf("\n");
+	printf("========================\n");
 }
-
 
 
 
@@ -266,8 +271,8 @@ int menu()
     printf("\n\n");
     printf("1. Criar uma String vazia.\n");
     printf("2. Criar uma string S1 e copia-la para a string S.\n");
-    printf("3. Verificar se S1 e S2 não idênticas.\n");
-    printf("4. Contar o número de palavras na string S.\n");
+    printf("3. Verificar se S1 e S2 não identicas.\n");
+    printf("4. Contar o numero de palavras na string S.\n");
     printf("5. Inverter uma as letras.\n");
     printf("6. Concatenar duas strings.\n");
     printf("7. Intercalar strings.\n");
@@ -282,16 +287,27 @@ int menu()
     return opcao;
 }
 
+
+// ***********************************************
+// ******        copia strings              ******
+// ***********************************************
+
+
+
+
+
 // ***********************************************
 // ***********************************************
 // ***********************************************
+
+
 
 int main()
 {
     int opcao,i,j,tam,contpalavra,volta;
     char c;
     char caracter;
-    Lista SVazia,S1,S,S2,S3;
+    Lista SVazia,S1,S,S2,S3,S4;
     opcao = 0;
     bool OK,OK1;
     opcao = menu();
@@ -545,8 +561,7 @@ int main()
             c = '\0';
             caracter='\0';
             system("cls");
-            OK = initString(&S1);
-            OK1 = initString(&S);
+            OK = initString(&S3);
             printf("\n\n");
             printf("Criar uma String[S3] e contar quantas palavras...\n\n");
             if(OK == TRUE)
@@ -600,5 +615,63 @@ int main()
                     printf("\n\n");
 
         }
+      if(opcao == 5)
+      {
+            int i,contpalavra = 0;
+            c = '\0';
+            caracter='\0';
+            system("cls");
+            OK = initString(&S4);
+            printf("\n\n");
+            printf("Criar uma String[S4] inverter as letras de uma frase...\n\n");
+            if(OK == TRUE)
+                {
+                    printf("Lista S4 criadas com sucesso. \n");
+                }
+                printf("\n\n");
+            printf("insira a String:\n");
+            scanf("%c",&c);
+            if(OK == TRUE)
+                {
+                    OK = testavazio(S4);
+
+                        if(OK == TRUE)
+                            {
+                                    for(i=0; i<=200 ;i++)
+                                        {
+                                                   if(caracter!='.')
+                                                {
+                                                    scanf("%c",&c);
+                                                    caracter = c;
+                                                            if(caracter == ' ')
+                                                                    {
+                                                                        contpalavra++;
+                                                                    }
+
+                                                    OK = inserirItem(&S4,caracter);
+                                                            if(OK == TRUE)
+                                                            {
+                                                            //printf("inserção[%i] realizada com sucesso.\n",i);
+                                                            }else
+                                                                {
+                                                                    printf("inserção[%i] falhou.\n",i);
+                                                                }
+                                                    }else
+                                                {
+                                                contpalavra++;
+                                                break;
+                                                }
+
+                                        }
+                            }
+                                }else
+                                    {
+                                    system("cls");
+                                    printf("Ocorreu um erro na criação da lista S4.\n");
+                                    }
+            inverteFrase(S4);
+
+      }
+
 }
 
