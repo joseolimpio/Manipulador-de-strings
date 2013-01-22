@@ -3,17 +3,19 @@ void inverterPalavras(Lista S)
 char frase[100];
 char frase1[100];
 char c;
+char c1;
 int pos,i = 0;
 int cont = 0;
 int j = 0;
 
-  printf("========================\n");
+	printf("========================\n");
 
    if ( S.inicio == NULL)
       printf("Lista Vazia\n");
    else {
 
       tNo* posAtual = S.inicio;
+    
 
 
         do{
@@ -51,23 +53,33 @@ int j = 0;
                         j = i-1;
 
                             do{
-                                printf("dado[%c] - pos[%i]\n",frase1[j],j);
+                               // printf("dado[%c] - pos[%i]\n",frase1[j],j);
+                               c1=frase1[j];
                                 j--;
+                                inserirItem(&S,c1);
                                 }while(( frase1[j] >= 48)&&(frase1[j] <= 125));
-                        printf("dado[%c] - pos[%i]\n",frase1[i],i);
+                        //printf("dado[%c] - pos[%i]\n",frase1[i],i);
+                        inserirItem(&S,c);
                         i++;
                     }else
                     {
                         i++;
                     }
-                 printf("dado[%c] - pos[%i]\n",frase1[i],i);
-
+                 //printf("dado[%c] - pos[%i]\n",frase1[i],i);
+                inserirItem(&S,c);
           }while(i<=pos);
 
+         tNo* posAtual = S.inicio;
+        do{
+            frase[i] = posAtual->caractere;
+            posAtual = posAtual->prox;
+            i++;
+            pos++;
+        }while(posAtual != NULL);
 
 
 
-
+    imprimeLista(S);
 
     printf("\n");
 	printf("========================\n");
