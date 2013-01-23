@@ -48,23 +48,30 @@ bool testavazio(Lista S)
 void imprimeLista (Lista S) {
 
 int pos =0;
+char c;
 
-  printf("========================\n");
+	printf("========================\n");
 
    if ( S.inicio == NULL)
       printf("Lista Vazia\n");
    else {
 
-      printf("Inicio = %p\n", S.inicio);
-      printf("Final = %p\n", S.fim);
       tNo* posAtual = S.inicio;
 
       do {
-          printf("posicao[%i] - dado[%c] -> ponteiro[%p]\n", pos, posAtual->caractere , posAtual);
+          c = posAtual->caractere;
+          if(( c >= 48)&&(c <= 125))
+          {
+          printf("%c",c);
+          }else
+          {
+            printf("%c",32);
+          }
           posAtual = posAtual->prox;
           pos++;
           } while (posAtual != NULL);
       }
+    printf("\n");
 	printf("========================\n");
 }
 // ***********************************************
@@ -218,7 +225,8 @@ char frase[40];
 char c;
 int pos,i = 0;
 
-	printf("========================\n");
+
+
 
    if ( S.inicio == NULL)
       printf("Lista Vazia\n");
@@ -236,16 +244,27 @@ int pos,i = 0;
         }while(posAtual != NULL);
 
         pos=S.tam;
+        initString(&S);
+
         do
         {
           c = frase[pos];
-          printf("%c",c);
+          if(c == 91)
+          {
+          inserirItem(&S,' ');
+          }else
+          {
+            inserirItem(&S,c);
+          }
+          //printf("%c",c);
            pos--;
         }while((pos >= 0 )||( c >= 48)&&(c <= 125));
 
       }
     printf("\n");
-	printf("========================\n");
+
+
+	imprimeLista(S);
 }
 
 // ***********************************************
@@ -260,7 +279,7 @@ char c;
 int pos,i,j =0;
 
 
-	printf("========================\n");
+
 
    if ((S.inicio == NULL)&&(S1.inicio == NULL))
    {
@@ -301,15 +320,208 @@ int pos,i,j =0;
 
       }
     printf("\n");
-	printf("========================\n");
+
 }
 
 
 
+
+// ***********************************************
+// ***********************************************
+// ***********************************************
+
+void inverterLetraPalavras(Lista S)
+{
+char frase[100];
+char c;
+int pos,i = 0;
+int cont = 0;
+int j = 0;
+Lista S1;
+
+
+
+   if ( S.inicio == NULL)
+      printf("Lista Vazia\n");
+   else {
+
+      tNo* posAtual = S.inicio;
+
+
+        do{
+          frase[i] = posAtual->caractere;
+          posAtual = posAtual->prox;
+
+           i++;
+           pos++;
+        }while(posAtual != NULL);
+        }
+
+        pos,i =0;
+        pos = S.tam;
+        initString(&S);
+          do{
+          c=frase[i];
+                if((c == ' ')||(c== '.'))
+                    {
+                        j = i-1;
+
+                            do{
+                                //printf("%c",frase[j]);
+                                if(frase[j]== 91)
+                                {
+                                inserirItem(&S,' ');
+                                j--;
+                                }else
+                                {
+                                inserirItem(&S,frase[j]);
+                                j--;
+                                }
+
+                                }while(( frase[j] >= 48)&&(frase[j] <= 125));
+
+                        //printf("%c",c);
+                        if(c == 91)
+                        {
+                        inserirItem(&S,' ');
+                        i++;
+                        }else
+                        {
+                        inserirItem(&S,c);
+                        i++;
+                        }
+
+                    }else
+                    {
+                     i++;
+                    }
+
+
+          }while(i<=pos);
+
+    printf("\n");
+    imprimeLista(S);
+    printf("\n");
+
+}
+// ***********************************************
+// ***********************************************
+// ***********************************************
+void inverterPalavras(Lista S)
+{
+char frase[100];
+char frase1[100];
+char c;
+char c1;
+int pos,i = 0;
+int cont = 0;
+int j = 0;
+bool OK;
+Lista S1;
+
+
+
+        if ( S.inicio == NULL)
+        printf("Lista Vazia\n");
+        else {
+
+        tNo* posAtual = S.inicio;
+
+        do{
+            frase[i] = posAtual->caractere;
+            posAtual = posAtual->prox;
+            i++;
+            pos++;
+        }while(posAtual != NULL);
+
+        }
+
+
+
+
+        tNo* posAtual = S.inicio;
+        do{
+
+            frase[i] = posAtual->caractere;
+            //printf("%c",frase[i]);
+            posAtual = posAtual->prox;
+            i++;
+            pos++;
+        }while(posAtual != NULL);
+
+
+        pos=S.tam;
+        initString(&S);
+         do // inverte a frase
+        {
+          c = frase[pos];
+          if(frase[pos] == 91)
+          {
+          inserirItem(&S,' ');
+          }else
+          {
+          inserirItem(&S,frase[pos]);
+          }
+           pos--;
+        }while((pos >= 0 )||( c >= 48)&&(c <= 125));
+
+
+
+        pos,i =0;
+        pos = S.tam;
+        initString(&S);
+        do{
+          c=frase[i];
+                if((c == ' ')||(c== '.'))
+                    {
+                        j = i-1;
+
+                            do{
+
+                                if(frase[j]== 91)
+                                {
+                                inserirItem(&S,' ');
+                                j--;
+                                }else
+                                {
+                                inserirItem(&S,frase[j]);
+                                j--;
+                                }
+
+                                }while(( frase[j] >= 48)&&(frase[j] <= 125));
+
+
+                        if(c == 91)
+                        {
+                        inserirItem(&S,' ');
+                        i++;
+                        }else
+                        {
+                        inserirItem(&S,c);
+                        i++;
+                        }
+
+                    }else
+                    {
+                     i++;
+                    }
+
+
+          }while(i<=pos);
+
+             printf("\n\n");
+            //imprimeLista(S);
+            printf("\n");
+
+             printf("\n\n");
+            inverteFrase(S);
+            printf("\n");
+
+}
 // ***********************************************
 // ******              Menu                 ******
 // ***********************************************
-int menu()
+void menu()
 {
     int opcao;
     system("cls");
@@ -332,160 +544,10 @@ int menu()
     printf("Opcao:");
     scanf("%d", &opcao);
     printf("|-----------------------------------------------|\n");
-    return opcao;
+  
+    
+    
 }
-// ***********************************************
-// ***********************************************
-// ***********************************************
-
-void inverterLetraPalavras(Lista S)
-{
-char frase[100];
-char c;
-int pos,i = 0;
-int cont = 0;
-int j = 0;
-
-	printf("========================\n");
-
-   if ( S.inicio == NULL)
-      printf("Lista Vazia\n");
-   else {
-
-      tNo* posAtual = S.inicio;
-
-
-        do{
-          frase[i] = posAtual->caractere;
-          posAtual = posAtual->prox;
-
-          i++;
-           pos++;
-        }while(posAtual != NULL);
-        }
-
-        pos,i =0;
-        pos = S.tam;
-          do{
-          c=frase[i];
-                if((c == ' ')||(c== '.'))
-                    {
-                        j = i-1;
-
-                            do{
-                                printf("%c",frase[j]);
-                                j--;
-                                }while(( frase[j] >= 48)&&(frase[j] <= 125));
-                        printf("%c",c);
-                        i++;
-                    }else
-                    {
-                     i++;
-                    }
-
-
-          }while(i<=pos);
-
-
-
-
-
-
-
-
-
-    printf("\n");
-	printf("========================\n");
-}
-// ***********************************************
-// ***********************************************
-// ***********************************************
-void inverterPalavras(Lista S)
-{
-char frase[100];
-char frase1[100];
-char c;
-char c1;
-int pos,i = 0;
-int cont = 0;
-int j = 0;
-
-	printf("========================\n");
-
-   if ( S.inicio == NULL)
-      printf("Lista Vazia\n");
-   else {
-
-      tNo* posAtual = S.inicio;
-
-
-        do{
-            frase[i] = posAtual->caractere;
-            posAtual = posAtual->prox;
-            i++;
-            pos++;
-        }while(posAtual != NULL);
-        }
-
-            pos,i =0;
-            pos = S.tam;
-
-
-            do //inverter frase
-            {
-            frase1[i] = frase[pos];
-            //printf("%c",frase1[i]);
-            i++;
-            pos--;
-            }while((pos >= 0 )||( c >= 48)&&(c <= 125));
-
-            printf("\n\n");
-
-            //inverter as letras nas palavras da frase
-            i = 0;
-            pos = S.tam;
-            j = 0;
-
-
-          do{
-          frase1[i];
-                if((frase1[i] == ' ')||(frase1[i] == '.'))
-                    {
-                        j = i-1;
-
-                            do{
-                               // printf("dado[%c] - pos[%i]\n",frase1[j],j);
-                               c1=frase1[j];
-                                j--;
-                                inserirItem(&S,c1);
-                                }while(( frase1[j] >= 48)&&(frase1[j] <= 125));
-                        //printf("dado[%c] - pos[%i]\n",frase1[i],i);
-                        inserirItem(&S,c);
-                        i++;
-                    }else
-                    {
-                        i++;
-                    }
-                 //printf("dado[%c] - pos[%i]\n",frase1[i],i);
-                inserirItem(&S,c);
-          }while(i<=pos);
-
-         tNo* posAtual = S.inicio;
-        do{
-            frase[i] = posAtual->caractere;
-            posAtual = posAtual->prox;
-            i++;
-            pos++;
-        }while(posAtual != NULL);
-
-
-
-    imprimeLista(S);
-
-    printf("\n");
-	printf("========================\n");
-}
-
 
 // ***********************************************
 // ***********************************************
