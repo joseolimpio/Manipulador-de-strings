@@ -1,13 +1,19 @@
-all: ManipuladorStrings
+.c.o:   $*.h
+	gcc -c $*.c
 
-ManipuladorStrings: ManipuladorStrings.o Manipuladores.o 
-  gcc	ManipuladorStrings.o Manipuladores.o  -o ManipuladorStrings
+.cpp.o:	$*.h
+	g++	-c $*.cpp
 
-ManipuladorStrings.o: ManipuladorStrings.c
-	gcc -c ManipuladorStrings.c
+all:	ManipuladorStrings \
+	Manipuladores
 
-Manipuladores.o: Manipuladores.h
-	gcc -c Manipuladores.h
 
-clean: 
-	rm -rf *o ManipuladorStrings	
+ManipuladorStrings:  ManipuladorStrings.o
+	gcc -o $@ $^
+
+Manipuladores:  Manipuladores.o
+	gcc -o $@ $^
+
+clean:
+	rm *.o *.*~ *~	ManipuladorStrings \
+			Manipuladores
